@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Desafio JS</title>
+</head>
+<body>
+	<form onsubmit="(event) => event.preventDefault()">
+		<div id="dias-da-semana" style="display: flex; justify-content: space-between; gap: 10px;">
+			<label for="domingo">Domingo
+				<input type="number" id="domingo" placeholder="Digite algo"  required>
+			</label>
+
+			<label for="segunda">Segunda
+				<input type="number" id="segunda" placeholder="Digite algo" required>
+			</label>
+
+			<label for="terca">Terça
+				<input type="number" id="terca" placeholder="Digite algo" required>
+			</label>
+
+			<label for="quarta">Quarta
+				<input type="number" id="quarta" placeholder="Digite algo" required>
+			</label>
+
+			<label for="quinta">Quinta
+				<input type="number" id="quinta" placeholder="Digite algo"  required>
+			</label>
+
+			<label for="sexta">Sexta
+				<input type="number" id="sexta" placeholder="Digite algo"  required>
+			</label>
+
+			<label for="sabado">Sábado
+				<input type="number" id="sabado" placeholder="Digite algo"  required>
+			</label>
+
+		</div>
+		<div style="display: flex; justify-content: center; margin-top: 20px;">
+			<label for="domingo">Palavra chave
+				<input type="text" id="palavra_chave" placeholder="Digite algo" required>
+			</label>
+			<button id="buscar" type="button">Buscar</button>
+		</div>
+	</form>
+
+	<div id="top5-palavras"></div>
+
+	<div id="agenda-dias">
+		<h3>Agenda por dia</h3>
+		<p id="total-dias"></p>
+		<div id="agenda-lista"></div>
+	</div>
+
+	<div id="videos">
+		<h3>Vídeos encontrados</h3>
+		<ul></ul>
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
