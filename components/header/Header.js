@@ -12,7 +12,10 @@ class Header {
     const html = await response.text();
     this.parent.insertAdjacentHTML("beforeend", html);
 
-		document.getElementById('buscar').addEventListener('click', this.handleSearch.bind(this));		
+		document.getElementById('busca-form').addEventListener('submit', (event) => {
+			this.handleSearch()
+			event.preventDefault()
+	});		
   }
 
 	processDuration(data, durationItems) {
@@ -25,18 +28,22 @@ class Header {
 	}	
 
 	formatDuration(duration) {
+		if (!duration || typeof duration !== 'string') return { text: '0:00', totalSeconds: 0, minutes: 0 };
 		const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-		if(!match) return '00:00:00';
+		if (!match) return { text: '0:00', totalSeconds: 0, minutes: 0 };
 
 		const h = parseInt(match[1]) || 0;
 		const m = parseInt(match[2]) || 0;
 		const s = parseInt(match[3]) || 0;
+		const totalSeconds = h * 3600 + m * 60 + s;
 
 		return {
-			text: `${h}:${m}:${s}`,
-			totalSeconds: h * 3600 + m * 60 + s
+			text: `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`,
+			totalSeconds,
+			minutes: Math.ceil(totalSeconds / 60)
 		};
 	}
+
 
 	async handleSearch() {
 		const palavraChave = document.getElementById('palavra_chave').value;
@@ -45,12 +52,15 @@ class Header {
 
 		data.items = this.processDuration(data.items, durationItems);
 
+		['#top5-palavras', '#videos', '#videos-por-dia'].forEach(sel => {
+			this.parent.querySelector(sel)?.remove();
+		});
+
 		const rankingWords = new RankingWords(this.parent, data.items);
 		await rankingWords.render();
 
 		const listVideos = new ListVideos(this.parent, data.items);
 		await listVideos.render();
-
 	}		
 }
 
